@@ -1,14 +1,13 @@
 <template>
     <div class="contacts__item">
-        <div class="row">
+        <b-row>
             <div class="col-md-2 col-sm-2">
                 <div class="contacts__item-img"></div>
             </div>
             <div class="col-md-7 col-sm-7">
                 <h5>{{ contact.name }}</h5>
-                <div>{{ contact.title }}</div>
             </div>
-        </div>
+        </b-row>
     </div>
 </template>
 
