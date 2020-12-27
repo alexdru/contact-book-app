@@ -1,14 +1,23 @@
 <template>
   <div id="app">
-    <AddContact
-      @add-contact="addContact"
-    />
-    <Sorting
-      @sort-contacts="sortBy"
-    />
-    <ContactsList
-      v-bind:contacts="contacts"
-    />
+    <b-container>
+      <AddContact
+        @add-contact="addContact"
+      />
+      <Sorting
+        @sort-contacts="sortBy"
+        @filter-contacts="filter"
+      />
+      <ContactsList
+        v-if="contacts.length"
+        v-bind:contacts="contacts"
+      />
+      <b-row v-else class="d-flex justify-content-center text-center my-5">
+        <div class="col-md-8 col-sm-12">
+          <p>List is empty</p>
+        </div>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -21,24 +30,49 @@
     name: 'App',
     data() {
       return {
-        contacts: [
-          {id: 1, name: 'Вася Петрович'},
-          {id: 2, name: 'Саша Васильевич'},
-          {id: 3, name: 'Митя Достоевский'}
-        ]
+        contacts: []
       }
+    },
+    mounted() {
+      //todo add limit = 5
+      //todo replace api
+      fetch('https://jsonplaceholder.typicode.com/users?_limit=5')
+        .then(response => response.json())
+        .then(json => {
+          this.contacts = json
+        })
+        .catch(error => console.log(error))
     },
     methods: {
       addContact(contact) {
-        this.contacts.push(contact)
+        //todo replace api
+        fetch('https://jsonplaceholder.typicode.com/users', {
+          method: 'POST',
+          body: JSON.stringify(contact),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+          }
+        })
+          //not sure
+          .then(response => this.contacts.push(response.data))
+          .catch(error => console.log(error))
       },
-      sortBy(prop) {
-        switch(prop) {
+      sortBy(value) {
+        switch(value) {
           case 'asc': return this.contacts.sort((a,b) => a.name < b.name ? -1 : 1)
           case 'desc': return this.contacts.sort((a,b) => a.name < b.name ? 1 : -1)
           case 'def': return this.contacts.sort((a,b) => a.id < b.id ? -1 : 1)
           default: return this.contacts
         }
+      },
+      filter(value) {
+        //todo replace api
+        fetch(`https://jsonplaceholder.typicode.com/users?_limit=${value}`)
+          .then(response => response.json())
+          .then(json => {
+            this.contacts = json
+          })
+          .catch(error => console.log(error))
       }
     },
     components: {
