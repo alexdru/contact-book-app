@@ -34,9 +34,8 @@
       }
     },
     mounted() {
-      //todo add limit = 5
       //todo replace api
-      fetch('https://jsonplaceholder.typicode.com/users?_limit=5')
+      fetch('https://jsonplaceholder.typicode.com/users')
         .then(response => response.json())
         .then(json => {
           this.contacts = json
@@ -53,8 +52,8 @@
             'Content-type': 'application/json; charset=UTF-8'
           }
         })
-          //not sure
-          .then(response => this.contacts.push(response.data))
+          .then((response) => response.json())
+          .then((json) => this.contacts.push(json))
           .catch(error => console.log(error))
       },
       sortBy(value) {
@@ -67,12 +66,21 @@
       },
       filter(value) {
         //todo replace api
-        fetch(`https://jsonplaceholder.typicode.com/users?_limit=${value}`)
-          .then(response => response.json())
-          .then(json => {
-            this.contacts = json
-          })
-          .catch(error => console.log(error))
+        if (value === 'all') {
+          fetch(`https://jsonplaceholder.typicode.com/users`)
+            .then(response => response.json())
+            .then(json => {
+              this.contacts = json
+            })
+            .catch(error => console.log(error))
+        } else {
+          fetch(`https://jsonplaceholder.typicode.com/users?_limit=${value}`)
+            .then(response => response.json())
+            .then(json => {
+              this.contacts = json
+            })
+            .catch(error => console.log(error))
+        }
       }
     },
     components: {
