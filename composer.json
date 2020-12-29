@@ -1,0 +1,24 @@
+{
+  "name": "druzhinin/contact-book-app",
+  "description": "Contact book api",
+  "type": "project",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "alexdru",
+      "email": "alexdru@outlook.com"
+    }
+  ],
+  "require": {
+    "php": "^7.3",
+    "illuminate/database": "^8.20",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Controllers\\": "app/controllers/",
+      "Models\\": "app/models/"
+    }
+  }
+}
