@@ -6,6 +6,8 @@ node_modules
 # local env files
 .env.local
 .env.*.local
+config.php
+contacts.db
 
 # Log files
 npm-debug.log*

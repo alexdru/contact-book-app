@@ -6,6 +6,12 @@
 npm install
 ```
 
+**Create `config.php` and database files:**
+```bash
+cp config.php.example config.php
+cp contacts.db.example contacts.db
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
