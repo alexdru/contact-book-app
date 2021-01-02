@@ -33,9 +33,8 @@
         contacts: []
       }
     },
-    mounted() {
-      //todo replace api
-      fetch('https://jsonplaceholder.typicode.com/users')
+    async mounted() {
+      fetch('http://localhost:8000/api/contacts')
         .then(response => response.json())
         .then(json => {
           this.contacts = json
@@ -44,16 +43,15 @@
     },
     methods: {
       addContact(contact) {
-        //todo replace api
-        fetch('https://jsonplaceholder.typicode.com/users', {
+        fetch('http://localhost:8000/api/contact/store', {
           method: 'POST',
-          body: JSON.stringify(contact),
           headers: {
             'Content-type': 'application/json; charset=UTF-8'
-          }
+          },
+          body: JSON.stringify(contact)
         })
-          .then((response) => response.json())
-          .then((json) => this.contacts.push(json))
+          .then(response => response.json())
+          .then(json => this.contacts.push(json))
           .catch(error => console.log(error))
       },
       sortBy(value) {
@@ -65,16 +63,15 @@
         }
       },
       filter(value) {
-        //todo replace api
         if (value === 'all') {
-          fetch(`https://jsonplaceholder.typicode.com/users`)
+          fetch(`http://localhost:8000/api/contacts`)
             .then(response => response.json())
             .then(json => {
               this.contacts = json
             })
             .catch(error => console.log(error))
         } else {
-          fetch(`https://jsonplaceholder.typicode.com/users?_limit=${value}`)
+          fetch(`http://localhost:8000/api/contacts/limit/${value}`)
             .then(response => response.json())
             .then(json => {
               this.contacts = json

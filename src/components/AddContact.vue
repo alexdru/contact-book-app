@@ -23,7 +23,6 @@
             onSubmit() {
                 if (this.name.trim()) {
                     const newContact = {
-                        id: Date.now(),
                         name: this.name
                     }
 
