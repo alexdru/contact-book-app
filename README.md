@@ -4,25 +4,17 @@
 ## Project setup
 ```
 npm install
+composer install
 ```
 
 **Create `config.php` and database files:**
 ```bash
-cp config.php.example config.php
+cp .env.example .env
 cp contacts.db.example contacts.db
 ```
 
-### Compiles and hot-reloads for development
+### Run and hot-reloads for development
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
+php -S localhost:8000
+vue-cli-service serve
 ```
