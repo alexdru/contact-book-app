@@ -4,9 +4,9 @@ node_modules
 /vendor/
 
 # local env files
+.env
 .env.local
 .env.*.local
-config.php
 contacts.db
 
 # Log files

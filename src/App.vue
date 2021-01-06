@@ -34,7 +34,7 @@
       }
     },
     async mounted() {
-      fetch('http://localhost:8000/api/contacts')
+      fetch(process.env.VUE_APP_API_URL + '/contacts')
         .then(response => response.json())
         .then(json => {
           this.contacts = json
@@ -43,7 +43,7 @@
     },
     methods: {
       addContact(contact) {
-        fetch('http://localhost:8000/api/contact/store', {
+        fetch(process.env.VUE_APP_API_URL + '/contact/store', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json; charset=UTF-8'
@@ -64,14 +64,14 @@
       },
       filter(value) {
         if (value === 'all') {
-          fetch(`http://localhost:8000/api/contacts`)
+          fetch(process.env.VUE_APP_API_URL + `/contacts`)
             .then(response => response.json())
             .then(json => {
               this.contacts = json
             })
             .catch(error => console.log(error))
         } else {
-          fetch(`http://localhost:8000/api/contacts/limit/${value}`)
+          fetch(process.env.VUE_APP_API_URL + `/contacts/limit/${value}`)
             .then(response => response.json())
             .then(json => {
               this.contacts = json

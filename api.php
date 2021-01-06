@@ -1,10 +1,10 @@
 <?php
-require 'config.php';
 require 'vendor/autoload.php';
 
 use Illuminate\Support\Facades\Request;
 use Models\Database;
 
+(Dotenv\Dotenv::createImmutable(__DIR__))->load();
 
 // Init Illuminate database connection
 new Database();
