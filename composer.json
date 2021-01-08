@@ -15,7 +15,8 @@
     "illuminate/database": "^8.20",
     "ext-json": "*",
     "bramus/router": "~1.5",
-    "vlucas/phpdotenv": "^5.2"
+    "vlucas/phpdotenv": "^5.2",
+    "illuminate/http": "^8.21"
   },
   "autoload": {
     "psr-4": {

@@ -51,7 +51,8 @@
           body: JSON.stringify(contact)
         })
           .then(response => response.json())
-          .then(json => this.contacts.push(json))
+          .then(json => console.log(json))
+          .then(this.contacts.push(contact))
           .catch(error => console.log(error))
       },
       sortBy(value) {
