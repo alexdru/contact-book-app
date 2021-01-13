@@ -27,9 +27,8 @@ sendCorsHeaders();
 // Define routes
 $router->mount('/api', function() use ($router) {
 
-    $router->get('/contacts', '\Controllers\ContactController@getContacts');
-    $router->get('/contacts/limit/{limit}', '\Controllers\ContactController@getLimitedContacts');
-    $router->post('/contact/store', '\Controllers\ContactController@storeContact');
+    $router->get('/contacts', '\Controllers\ContactController@index');
+    $router->post('/contact/store', '\Controllers\ContactController@store');
 
 });
 

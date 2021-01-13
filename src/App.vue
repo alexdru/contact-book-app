@@ -72,7 +72,7 @@
             })
             .catch(error => console.log(error))
         } else {
-          fetch(process.env.VUE_APP_API_URL + `/contacts/limit/${value}`)
+          fetch(process.env.VUE_APP_API_URL + `/contacts?limit=${value}`)
             .then(response => response.json())
             .then(json => {
               this.contacts = json

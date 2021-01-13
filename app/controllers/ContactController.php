@@ -5,35 +5,42 @@ namespace Controllers;
 use Illuminate\Http\Request;
 use Models\Contact;
 
-class ContactController {
-
-    //get all contacts
-    public static function getContacts(): string
+class ContactController extends BaseController
+{
+    /**
+     * Get contacts quantity
+     *
+     * @throws \JsonException
+     */
+    public function index(): void
     {
-        $contacts = Contact::all();
+        $request = Request::capture();
+        $limit = $request->get('limit');
 
-        return print(json_encode($contacts, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
+        if ($limit) {
+            $result = Contact::query()->limit($limit)->get();
+        } else {
+            $result = Contact::all();
+        }
+
+        $this->response($result);
     }
 
-    //get limited contacts
-    public static function getLimitedContacts($limit): string
-    {
-        $result = Contact::query()->limit($limit)->get();
-
-        return print(json_encode($result, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
-    }
-
-    //store new contact
-    public function storeContact(): string
+    /**
+     * Store new contact
+     *
+     * @throws \JsonException
+     */
+    public function store(): void
     {
         $request = Request::capture();
         $name = $request->get('name');
 
-        $contact = new Contact([
+        $result = (new Contact([
             'name' => $name
-        ]);
+        ]))->save();
 
-        return print(json_encode($contact->save(), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
+        $this->response($result);
     }
 
 }
