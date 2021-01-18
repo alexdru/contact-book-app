@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "php": "^7.3",
+    "php": "^7.4|^8.0",
     "illuminate/database": "^8.20",
     "ext-json": "*",
     "bramus/router": "~1.5",
