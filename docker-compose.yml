@@ -19,6 +19,9 @@ services:
 
   php:
     build:
+      args:
+        user: www
+        uid: 1000
       context: ./backend/
       dockerfile: Dockerfile
     container_name: php
