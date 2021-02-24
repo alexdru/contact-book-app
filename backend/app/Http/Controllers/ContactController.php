@@ -1,22 +1,20 @@
 <?php
 
-namespace Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Models\Contact;
+use App\Models\Contact;
 
-class ContactController extends BaseController
+class ContactController extends Controller
 {
     /**
      * Get contacts quantity
      *
+     * @param $limit
      * @throws \JsonException
      */
-    public function index(): void
+    public function index($limit = null): void
     {
-        $request = Request::capture();
-        $limit = $request->get('limit');
-
         if ($limit) {
             $result = Contact::query()->limit($limit)->get();
         } else {
@@ -29,12 +27,16 @@ class ContactController extends BaseController
     /**
      * Store new contact
      *
+     * @param Request $request
      * @throws \JsonException
      */
-    public function store(): void
+    public function store(Request $request): void
     {
-        $request = Request::capture();
-        $name = $request->get('name');
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $name = $request->name;
 
         $result = (new Contact([
             'name' => $name
@@ -42,5 +44,4 @@ class ContactController extends BaseController
 
         $this->response($result);
     }
-
 }

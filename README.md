@@ -4,7 +4,7 @@
 Requirements:
 - docker-compose
 - frontend: @vue/cli, bootstrap css, without jquery
-- backend: php api without frameworks
+- backend: ~~php api without frameworks~~ Laravel
 - database: sqlite
 
 ## Installation
@@ -19,7 +19,7 @@ docker-compose up
 **Create `.env` and database files for a backend:**
 ```bash
 docker exec -it php cp .env.example .env
-docker exec -it php cp contacts.db.example contacts.db
+docker exec -it php cp .\database\contacts.sqlite.example .\database\contacts.sqlite
 ```
 
 **Create `.env` file for a frontend (for running container):**
