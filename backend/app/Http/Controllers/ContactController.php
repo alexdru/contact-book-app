@@ -10,7 +10,7 @@ class ContactController extends Controller
     /**
      * Get contacts quantity
      *
-     * @param $limit
+     * @param int $limit
      * @throws \JsonException
      */
     public function index($limit = null): void
@@ -41,6 +41,19 @@ class ContactController extends Controller
         $result = (new Contact([
             'name' => $name
         ]))->save();
+
+        $this->response($result);
+    }
+
+    /**
+     * Delete contact
+     *
+     * @param int $id
+     * @throws \JsonException
+     */
+    public function destroy($id): void
+    {
+        $result = Contact::findOrFail($id)->delete();
 
         $this->response($result);
     }

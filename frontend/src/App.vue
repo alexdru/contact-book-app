@@ -11,6 +11,7 @@
       <ContactsList
         v-if="contacts.length"
         v-bind:contacts="contacts"
+        @delete-contact="deleteContact"
       />
       <b-row v-else class="d-flex justify-content-center text-center my-5">
         <div class="col-md-8 col-sm-12">
@@ -43,7 +44,7 @@
     },
     methods: {
       addContact(contact) {
-        fetch(process.env.VUE_APP_API_URL + '/contact/store', {
+        fetch(process.env.VUE_APP_API_URL + '/contacts/store', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json; charset=UTF-8'
@@ -51,7 +52,6 @@
           body: JSON.stringify(contact)
         })
           .then(response => response.json())
-          .then(json => console.log(json))
           .then(this.contacts.push(contact))
           .catch(error => console.log(error))
       },
@@ -79,6 +79,13 @@
             })
             .catch(error => console.log(error))
         }
+      },
+      deleteContact(id) {
+        this.contacts = this.contacts.filter(c => c.id !== id)
+        fetch(process.env.VUE_APP_API_URL + `/contacts/${id}`, {
+          method: 'DELETE'
+        })
+          .catch(error => console.log(error))
       }
     },
     components: {

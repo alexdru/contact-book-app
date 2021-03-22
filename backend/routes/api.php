@@ -16,5 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['cors'])->group(function () {
     Route::get('/contacts/{limit?}', [ContactController::class, 'index']);
-    Route::post('/contact/store', [ContactController::class, 'store']);
+    Route::post('/contacts/store', [ContactController::class, 'store']);
+    Route::delete('/contacts/{id}', [ContactController::class, 'destroy']);
 });
