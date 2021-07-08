@@ -2,42 +2,38 @@ version: '3'
 
 services:
   nginx:
-    image: nginx:latest
+    image: nginx:alpine
     container_name: nginx
     ports:
       - "80:80"
       - "8000:8000"
     volumes:
-      - ./backend/nginx:/etc/nginx/conf.d
-      - ./backend/:/var/www/contacts-book-app/backend
-      - ./frontend/:/var/www/contacts-book-app/frontend
-      - ./logs/nginx:/var/log/nginx
+      - ./docker/nginx:/etc/nginx/conf.d
+      - ./:/var/www/contacts-book-app
     restart: always
-    links:
+    depends_on:
       - php
-      - vue
 
   php:
     build:
       args:
         user: www
         uid: 1000
-      context: ./backend/
+      context: ./docker/php
       dockerfile: Dockerfile
     container_name: php
     volumes:
       - ./backend/:/var/www/contacts-book-app/backend
-      - /var/www/contacts-book-app/backend/vendor
+    tty: true
     restart: always
 
   vue:
     build:
-      context: ./frontend/
+      context: ./docker/vue
       dockerfile: Dockerfile
-    container_name: vue-cli
+    container_name: vue
     ports:
       - "8080:80"
     volumes:
       - ./frontend/:/var/www/contacts-book-app/frontend
       - /var/www/contacts-book-app/frontend/node_modules
-    restart: on-failure

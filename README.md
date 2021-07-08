@@ -24,7 +24,7 @@ docker exec -it php cp .\database\contacts.sqlite.example .\database\contacts.sq
 
 **Create `.env` file for a frontend (for running container):**
 ```bash
-docker exec -it vue-cli cp .env.example .env
+docker exec -it vue cp .env.example .env
 ```
 
 **Create `.env` file for a frontend (for a stopped container):**
@@ -34,6 +34,11 @@ cp .env.example .env
 docker-compose restart
 ```
 > replace `cp` to `copy` for Windows OS
+
+**Run application:**
+```
+http://localhost
+```
 
 ## License
 
