@@ -8,6 +8,6 @@ COPY . .
 
 # Install NPM
 RUN npm install
-# RUN npm install -g @vue/cli-service
+# RUN npm install -g @vue/cli
 
 CMD ["npm", "run", "build"]

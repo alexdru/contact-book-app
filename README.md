@@ -3,9 +3,9 @@
 
 Requirements:
 - docker-compose
-- frontend: @vue/cli, bootstrap css, without jquery
+- frontend: Vue CLI, bootstrap css, without jquery
 - backend: ~~php api without frameworks~~ Laravel
-- database: sqlite
+- database: mysql
 
 ## Installation
 
@@ -16,10 +16,15 @@ Step-by-step instructions for starting a project:
 docker-compose up
 ```
 
-**Create `.env` and database files for a backend:**
+**Create `.env` and generate app key for a backend:**
 ```bash
 docker exec -it php cp .env.example .env
-docker exec -it php cp .\database\contacts.sqlite.example .\database\contacts.sqlite
+docker exec -it php php artisan key:generate
+```
+
+**Make database migration and seeding:**
+```bash
+docker exec -it php php artisan migrate:fresh --seed
 ```
 
 **Create `.env` file for a frontend (for running container):**

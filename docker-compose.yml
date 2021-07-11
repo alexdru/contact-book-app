@@ -14,6 +14,20 @@ services:
     depends_on:
       - php
 
+  database:
+    image: mysql:5.7
+    container_name: database
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: contact_book
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_PASSWORD: rootroot
+      MYSQL_USER: rootuser
+    volumes:
+      - ./docker/sql:/docker-entrypoint-initdb.d
+
   php:
     build:
       args:
@@ -26,6 +40,8 @@ services:
       - ./backend/:/var/www/contacts-book-app/backend
     tty: true
     restart: always
+    depends_on:
+      - database
 
   vue:
     build:
