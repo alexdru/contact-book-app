@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ContactResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ContactController extends Controller
 {
     /**
      * Get contacts quantity
      *
-     * @param int $limit
-     * @throws \JsonException
+     * @param int|null $limit
+     * @return AnonymousResourceCollection
      */
-    public function index($limit = null): void
+    public function index(int $limit = null): AnonymousResourceCollection
     {
         if ($limit) {
             $result = Contact::query()->limit($limit)->get();
@@ -21,40 +24,40 @@ class ContactController extends Controller
             $result = Contact::all();
         }
 
-        $this->response($result);
+        return ContactResource::collection($result);
     }
 
     /**
      * Store new contact
      *
      * @param Request $request
-     * @throws \JsonException
+     * @return JsonResponse
      */
-    public function store(Request $request): void
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'name' => 'required'
         ]);
 
-        $name = $request->name;
+        $name = $request->get('name');
 
         $result = (new Contact([
             'name' => $name
         ]))->save();
 
-        $this->response($result);
+        return $this->customResponse($result);
     }
 
     /**
      * Delete contact
      *
      * @param int $id
-     * @throws \JsonException
+     * @return JsonResponse
      */
-    public function destroy($id): void
+    public function destroy(int $id): JsonResponse
     {
         $result = Contact::findOrFail($id)->delete();
 
-        $this->response($result);
+        return $this->customResponse($result);
     }
 }

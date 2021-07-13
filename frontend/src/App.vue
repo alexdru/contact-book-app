@@ -38,7 +38,7 @@
       fetch(process.env.VUE_APP_API_URL + '/contacts')
         .then(response => response.json())
         .then(json => {
-          this.contacts = json
+          this.contacts = json.data
         })
         .catch(error => console.log(error))
     },
@@ -68,14 +68,14 @@
           fetch(process.env.VUE_APP_API_URL + `/contacts`)
             .then(response => response.json())
             .then(json => {
-              this.contacts = json
+              this.contacts = json.data
             })
             .catch(error => console.log(error))
         } else {
           fetch(process.env.VUE_APP_API_URL + `/contacts/${value}`)
             .then(response => response.json())
             .then(json => {
-              this.contacts = json
+              this.contacts = json.data
             })
             .catch(error => console.log(error))
         }
