@@ -31,12 +31,14 @@ class ContactController extends Controller
      * Store new contact
      *
      * @param Request $request
+     * @bodyParam name string required Contact name. For example: "Test Test"
+     *
      * @return JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required|string|min:2|max:100'
         ]);
 
         $name = $request->get('name');
@@ -52,6 +54,8 @@ class ContactController extends Controller
      * Delete contact
      *
      * @param int $id
+     * @urlParam id int required Contact id. For example: 1
+     *
      * @return JsonResponse
      */
     public function destroy(int $id): JsonResponse

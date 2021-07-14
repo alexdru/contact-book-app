@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/contacts/{limit?}', [ContactController::class, 'index']);
-Route::post('/contacts/store', [ContactController::class, 'store']);
-Route::delete('/contacts/{id}', [ContactController::class, 'destroy']);
+Route::prefix('contacts')->group(function () {
+    Route::get('{limit?}', [ContactController::class, 'index']);
+    Route::post('', [ContactController::class, 'store']);
+    Route::delete('{id}', [ContactController::class, 'destroy']);
+});
