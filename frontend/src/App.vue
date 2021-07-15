@@ -44,7 +44,7 @@
     },
     methods: {
       addContact(contact) {
-        fetch(process.env.VUE_APP_API_URL + '/contacts/store', {
+        fetch(process.env.VUE_APP_API_URL + '/contacts', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json; charset=UTF-8'
@@ -52,7 +52,7 @@
           body: JSON.stringify(contact)
         })
           .then(response => response.json())
-          .then(this.contacts.push(contact))
+          .then(json => this.contacts.push(json.data))
           .catch(error => console.log(error))
       },
       sortBy(value) {
