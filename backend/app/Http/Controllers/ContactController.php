@@ -2,66 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use App\Http\Resources\ContactResource;
+use App\Services\ContactService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Models\Contact;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ContactController extends Controller
 {
+    protected ContactService $contactService;
+
+    public function __construct()
+    {
+        $this->contactService = app(ContactService::class);
+    }
+
     /**
-     * Get contacts quantity
+     * Get all contacts or limited contacts
      *
      * @param int|null $limit
      * @return AnonymousResourceCollection
      */
     public function index(int $limit = null): AnonymousResourceCollection
     {
-        if ($limit) {
-            $result = Contact::query()->limit($limit)->get();
-        } else {
-            $result = Contact::all();
-        }
+        $contacts = $this->contactService->index($limit);
 
-        return ContactResource::collection($result);
+        return ContactResource::collection($contacts);
     }
 
     /**
      * Store new contact
      *
-     * @param Request $request
+     * @param ContactRequest $request
      * @bodyParam name string required Contact name. For example: "Test Test"
      *
-     * @return JsonResponse
+     * @return ContactResource
      */
-    public function store(Request $request): JsonResponse
+    public function store(ContactRequest $request): ContactResource
     {
-        $request->validate([
-            'name' => 'required|string|min:2|max:100'
-        ]);
+        $input = $request->validated();
+        $contact = $this->contactService->store($input);
 
-        $name = $request->get('name');
-
-        $result = (new Contact([
-            'name' => $name
-        ]))->save();
-
-        return $this->customResponse($result);
+        return new ContactResource($contact);
     }
 
     /**
      * Delete contact
      *
-     * @param int $id
-     * @urlParam id int required Contact id. For example: 1
+     * @param Contact $contact
+     * @urlParam contact integer required Contact id. For example: 1
      *
      * @return JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(Contact $contact): JsonResponse
     {
-        $result = Contact::findOrFail($id)->delete();
+        $response = $this->contactService->destroy($contact);
 
-        return $this->customResponse($result);
+        return $this->customResponse($response);
     }
 }

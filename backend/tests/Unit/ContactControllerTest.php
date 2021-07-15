@@ -29,12 +29,14 @@ class ContactControllerTest extends TestCase
      * Testing contact saving
      *
      * @see ContactController::store()
+     * @throws JsonException
      */
     public function testStore(): void
     {
         $response = $this->post('/api/contacts', ['name' => 'Test Test']);
 
-        $this->assertEquals(true, $response['data']);
+        $structure = $this->getFileStructure('/responses/contact/contact-data.json');
+        $response->assertJsonStructure($structure);
     }
 
     /**
