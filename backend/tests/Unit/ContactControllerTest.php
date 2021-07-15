@@ -49,7 +49,7 @@ class ContactControllerTest extends TestCase
             ->inRandomOrder()
             ->first();
 
-        $response = $this->delete('/api/contacts', ['id' => $contactId->id]);
+        $response = $this->delete("/api/contacts/$contactId->id");
 
         $this->assertEquals(true, $response['data']);
     }
